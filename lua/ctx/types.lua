@@ -63,3 +63,8 @@
 ---@class Ctx.Items.Selection: Ctx.Items.Base
 ---@field text string First 80 characters of the selected lines
 ---@field user_data table<string> Lines of the selection
+
+-- parse.lua ------------------------------------------------------------------
+
+---@class Ctx.Parse
+---@field selection fun(Ctx.Items.Selection): string Convert a selection item to markdown

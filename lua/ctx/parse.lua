@@ -1,7 +1,7 @@
 -- lua/ctx/parse.lua
 local log = require("ctx.log")
 
-local items = vim.fn.getqflist()
+local M = {}
 
 local severities = {
   E = vim.diagnostic.severity.ERROR,
@@ -10,6 +10,45 @@ local severities = {
   H = vim.diagnostic.severity.HINT,
   N = vim.diagnostic.severity.HINT,
 }
+
+--- Convert a selection item to markdown
+---@param item Ctx.Items.Selection The selection item to convert
+---@return string Formatted markdown
+M.selection = function(item)
+  -- Get basic information
+  local buf_name = vim.api.nvim_buf_get_name(item.bufnr)
+  local file_name = vim.fn.fnamemodify(buf_name, ":~:.")
+  local line_range = item.lnum .. "-" .. item.end_lnum
+
+  -- Get filetype for syntax highlighting
+  local filetype = vim.bo[item.bufnr].filetype
+  filetype = filetype ~= "" and filetype or "text"
+
+  -- Format as markdown
+  local lines = {
+    "### Selection from " .. file_name .. " (lines " .. line_range .. ")",
+    "",
+    "```" .. filetype,
+  }
+
+  -- Add all selected lines
+  for _, line in ipairs(item.user_data) do
+    table.insert(lines, line)
+  end
+
+  table.insert(lines, "```")
+  table.insert(lines, "")
+
+  return table.concat(lines, "\n")
+end
+
+-- JUST for debug
+local items = vim.fn.getqflist()
+for i, item in ipairs(items) do
+  log.debug("item: " .. vim.inspect(item))
+end
+
+return M
 
 --[[
 -- The following code is the source implementation for the snacks picker.
@@ -57,7 +96,3 @@ local severities = {
 -- end
 --
 -- return M
-
-for i, item in ipairs(items) do
-  log.debug("item: " .. vim.inspect(item))
-end
