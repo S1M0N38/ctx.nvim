@@ -15,25 +15,21 @@ local default_config = {
   plugin = "ctx.nvim",
 
   -- Should print the output to neovim while running
-  use_console = true,
-
-  -- Should highlighting be used in console (using echohl)
-  highlights = true,
+  use_console = require("ctx.config").options.log.use_console,
 
   -- Should write to a file
-  use_file = true,
+  use_file = require("ctx.config").options.log.use_file,
 
   -- Any messages above this level will be logged.
-  level = "info",
+  level = require("ctx.config").options.log.level,
 
   -- Level configuration
   modes = {
-    { name = "trace", hl = "Comment" },
-    { name = "debug", hl = "Comment" },
-    { name = "info", hl = "None" },
-    { name = "warn", hl = "WarningMsg" },
-    { name = "error", hl = "ErrorMsg" },
-    { name = "fatal", hl = "ErrorMsg" },
+    { name = "trace", level = vim.log.levels.TRACE },
+    { name = "debug", level = vim.log.levels.DEBUG },
+    { name = "info", level = vim.log.levels.INFO },
+    { name = "warn", level = vim.log.levels.WARN },
+    { name = "error", level = vim.log.levels.ERROR },
   },
 
   -- Can limit the number of decimals displayed for floats
@@ -95,20 +91,8 @@ log.new = function(config, standalone)
 
     -- Output to console
     if config.use_console then
-      local console_string = string.format("[%-6s%s] %s: %s", nameupper, os.date("%H:%M:%S"), lineinfo, msg)
-
-      if config.highlights and level_config.hl then
-        vim.cmd(string.format("echohl %s", level_config.hl))
-      end
-
-      local split_console = vim.split(console_string, "\n")
-      for _, v in ipairs(split_console) do
-        vim.cmd(string.format([[echom "[%s] %s"]], config.plugin, vim.fn.escape(v, '"')))
-      end
-
-      if config.highlights and level_config.hl then
-        vim.cmd("echohl NONE")
-      end
+      local console_string = string.format("[%s] %s: %s", nameupper, lineinfo, msg)
+      vim.notify(console_string, level_config.level, { title = config.plugin })
     end
 
     -- Output to log file
