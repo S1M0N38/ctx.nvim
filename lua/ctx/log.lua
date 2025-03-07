@@ -1,5 +1,5 @@
---[[ log.lua
-
+-- lua/ctx/log.lua
+--[[
 Inspired by rxi/log.lua
 Modified by tjdevries and can be found at github.com/tjdevries/vlog.nvim
 

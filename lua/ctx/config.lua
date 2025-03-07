@@ -1,3 +1,4 @@
+-- lua/ctx/config.lua
 local M = {}
 
 ---@type Ctx.Options
