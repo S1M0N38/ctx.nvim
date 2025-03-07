@@ -33,3 +33,16 @@
 ---@class Ctx.Health
 ---@field check fun(): nil Check the health of the plugin
 
+-- items.lua ------------------------------------------------------------------
+
+---@class Ctx.Items
+---@field selection fun(): Ctx.Items.Selection? Selected lines as quickfix/loclist item
+
+---@class Ctx.Items.Base
+---@field bufnr number Buffer number
+---@field lnum number First line number
+---@field end_lnum number? End line number
+
+---@class Ctx.Items.Selection: Ctx.Items.Base
+---@field text string First 80 characters of the selected lines
+---@field user_data table<string> Lines of the selection
