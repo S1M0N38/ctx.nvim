@@ -1,7 +1,13 @@
 local M = {}
 
 ---@type Ctx.Options
-M.defaults = {}
+M.defaults = {
+  log = {
+    level = "warn",
+    use_console = true,
+    use_file = false,
+  },
+}
 
 ---@type Ctx.Options
 ---@diagnostic disable-next-line: missing-fields
