@@ -5,7 +5,7 @@
 -- init.lua --------------------------------------------------------------------
 
 ---@class Ctx
----@field setup fun(opts: Ctx.Options): nil the plugin
+---@field setup fun(opts: Ctx.Options): nil Setup the plugin
 
 -- config.lua -----------------------------------------------------------------
 
@@ -15,14 +15,21 @@
 ---@field setup fun(opts: Ctx.Options): nil Extend the defaults options table with the user options
 
 ---@class Ctx.Options
----@field log Ctx.Log: Log options
+---@field log Ctx.Options.Log: Log options
 
----@class Ctx.Log
+---@class Ctx.Options.Log
 ---@field level "trace"|"debug"|"info"|"warn"|"error": Log level
 ---@field use_console boolean: Log to console
 ---@field use_file boolean: Log to file
+
+-- log.lua --------------------------------------------------------------------
+
+---@class Ctx.Log
+---@field setup fun(opts: Ctx.Options): nil Setup the logger
+---@field _initialize fun(): nil Initialize the logger
 
 -- health.lua -----------------------------------------------------------------
 
 ---@class Ctx.Health
 ---@field check fun(): nil Check the health of the plugin
+
