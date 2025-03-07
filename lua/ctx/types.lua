@@ -33,6 +33,11 @@
 ---@class Ctx.Health
 ---@field check fun(): nil Check the health of the plugin
 
+-- utils.lua ------------------------------------------------------------------
+
+---@class Ctx.Utils
+---@field highlight fun(item: Ctx.Items.Base, timeout: number?): nil Highlight quickfix/loclist item
+
 -- items.lua ------------------------------------------------------------------
 
 ---@class Ctx.Items
