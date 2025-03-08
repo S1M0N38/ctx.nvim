@@ -23,6 +23,14 @@ M.selection = function()
 
   local lines = vim.api.nvim_buf_get_lines(0, start_line - 1, end_line, false)
 
+  local breadcrumbs = vim.fn["nvim_treesitter#statusline"]({
+    indicator_size = 120,
+    type_patterns = { "class", "function", "method", "impl", "struct" },
+    separator = " > ",
+    allow_duplicates = false,
+  })
+  log.debug("breadcrumbs:", breadcrumbs)
+
   ---@type Ctx.Items.Selection
   local item = {
     bufnr = vim.api.nvim_get_current_buf(),
