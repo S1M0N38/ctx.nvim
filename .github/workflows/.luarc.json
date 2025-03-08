@@ -7,5 +7,8 @@
     "${3rd}/busted/library"
   ],
   "Lua.diagnostics.libraryFiles": "Disable",
-  "Lua.diagnostics.neededFileStatus": "Any"
+  "Lua.diagnostics.neededFileStatus": "Any",
+  "Lua.workspace.ignoreDir": [
+    "/home/runner/work/ctx.nvim/ctx.nvim/spec/data/example.lua"
+  ]
 }
