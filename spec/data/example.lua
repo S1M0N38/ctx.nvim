@@ -8,9 +8,6 @@
 --    quickfix for them. Do not remove them.
 --]]
 
--- Simple Lua program demonstrating core language features
-
--- Function to calculate factorial with nested helper function
 function factorial(n)
   -- Nested function to validate input
   local function validate(x, y)
@@ -24,13 +21,6 @@ function factorial(n)
   if n <= 1 then
     return 1
   else
-    return n * factorial(n - 1)
+    return n * factorial(n - 1,)
   end
 end
-
--- Table (similar to dictionary/array)
-local data = {
-  name = "Example",
-  values = { 10, 20, 30, 40, 50 },
-  active = true,,
-}
