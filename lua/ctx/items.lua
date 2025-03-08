@@ -37,7 +37,12 @@ M.selection = function()
     lnum = start_line,
     end_lnum = end_line,
     text = string.sub(table.concat(lines, "\n"), 1, 76) .. " ...",
-    user_data = lines,
+    user_data = {
+      breadcrumbs = breadcrumbs,
+      lines = lines,
+    },
+    pattern = "",
+    valid = 1,
   }
 
   return item
