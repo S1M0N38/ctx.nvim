@@ -1,2 +1,3 @@
 repro/.repro
 spec/data/example.lua
+spec/data/src/diagnostics.lua
