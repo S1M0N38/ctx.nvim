@@ -1,6 +1,6 @@
 return {
   {
-    bufnr = 2,
+    bufnr = 1, -- spec/data/src/diagnostics.lua
     col = 10,
     end_col = 19,
     end_lnum = 11,
@@ -14,7 +14,7 @@ return {
     vcol = 0,
   },
   {
-    bufnr = 2,
+    bufnr = 1, -- spec/data/src/diagnostics.lua
     col = 30,
     end_col = 31,
     end_lnum = 13,
@@ -28,7 +28,7 @@ return {
     vcol = 0,
   },
   {
-    bufnr = 2,
+    bufnr = 1, -- spec/data/src/diagnostics.lua
     col = 16,
     end_col = 17,
     end_lnum = 20,
@@ -42,7 +42,21 @@ return {
     vcol = 0,
   },
   {
-    bufnr = 2,
+    bufnr = 1, -- spec/data/src/diagnostics.lua
+    col = 12,
+    end_col = 13,
+    end_lnum = 24,
+    lnum = 24,
+    module = "",
+    nr = 0,
+    pattern = "",
+    text = "Undefined global `m`.",
+    type = "W",
+    valid = 1,
+    vcol = 0,
+  },
+  {
+    bufnr = 1, -- spec/data/src/diagnostics.lua
     col = 32,
     end_col = 32,
     end_lnum = 24,

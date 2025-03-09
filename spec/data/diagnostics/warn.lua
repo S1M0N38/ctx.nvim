@@ -1,6 +1,6 @@
 return {
   {
-    bufnr = 2,
+    bufnr = 1, -- spec/data/src/diagnostics.lua
     col = 16,
     end_col = 17,
     end_lnum = 20,

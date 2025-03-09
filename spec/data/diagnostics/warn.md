@@ -1,10 +1,7 @@
-diagnostics: ctx.nvim/spec/data/example.lua
-
-```lua
+```lua ctx.nvim/spec/data/src/diagnostics.lua:18-22
   end
 
-  n = validate(m)
-// warning: Undefined global `m`.
+  n = validate(m) -- warning: Undefined global `m`.
   if n <= 1 then
     return 1
 ```

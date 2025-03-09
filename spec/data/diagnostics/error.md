@@ -1,10 +1,7 @@
-diagnostics: ctx.nvim/spec/data/example.lua
-
-```lua
+```lua ctx.nvim/spec/data/src/diagnostics.lua:22-25
     return 1
   else
-    return n * factorial(n - 1,)
-// error: <exp> expected.
+    return m * factorial(n - 1,) -- error: <exp> expected.
   end
 end
 ```
