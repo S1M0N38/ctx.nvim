@@ -36,7 +36,7 @@
 -- utils.lua ------------------------------------------------------------------
 
 ---@class Ctx.Utils
----@field highlight fun(item: Ctx.Items.Base, timeout: number?): nil Highlight quickfix/loclist item
+---@field highlight fun(item: Ctx.Items.Selection, timeout: integer?): nil Highlight quickfix/loclist item
 
 -- items.lua ------------------------------------------------------------------
 
@@ -61,6 +61,7 @@
 ---@field vcol? integer Visual column number. Indicates if the column number is a visual column number (when set to 1) or a byte index (when set to 0).
 
 ---@class Ctx.Items.Selection: Ctx.Items.Base
+---@field bufnr integer The buffer number where the item originates.
 ---@field text string First 80 characters of the selected lines
 ---@field user_data Ctx.Items.Selection.UserData User data associated with the selection
 

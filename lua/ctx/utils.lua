@@ -4,8 +4,8 @@ local log = require("ctx.log")
 local M = {}
 
 --- Highlight quickfix/loclist item
----@param item Ctx.Items.Base Item to highlight
----@param timeout number? duration in milliseconds
+---@param item Ctx.Items.Selection Item to highlight
+---@param timeout integer? duration in milliseconds
 ---@return nil
 M.highlight = function(item, timeout)
   timeout = 100 or timeout
@@ -13,7 +13,6 @@ M.highlight = function(item, timeout)
   local buf = item.bufnr
   local start_line = item.lnum
   local end_line = item.end_lnum or item.lnum
-  assert(buf, "bufnr is required")
 
   -- Apply highlight
   for i = start_line, end_line do
