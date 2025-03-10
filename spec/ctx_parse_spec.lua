@@ -7,14 +7,20 @@ end
 
 local function load_buffer(item)
   local bufnr = vim.api.nvim_create_buf(false, true)
+  -- set lines
   vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, vim.fn.readfile(item.filename))
-  item.bufnr = bufnr -- Add bufnr to item
-  print("Loaded buffer:", item.bufnr, item.filename)
+  -- set filetype
+  local filetype = vim.filetype.match({ filename = item.filename })
+  vim.api.nvim_set_option_value("filetype", filetype, { buf = bufnr })
+  -- set filename
+  vim.api.nvim_buf_set_name(bufnr, item.filename)
+  -- update item to standard representation
+  item.bufnr = bufnr
+  item.filename = nil
 end
 
 local function unload_buffer(item)
   vim.api.nvim_buf_delete(item.bufnr, { force = true })
-  print("Unloaded buffer:", item.bufnr)
 end
 
 describe("[#parse #files] parse.file function tests", function()
@@ -34,7 +40,7 @@ describe("[#parse #files] parse.file function tests", function()
         unload_buffer(item)
       end
       local expected_md = read_file(md_files[i])
-      assert.are.equal(expected_md, table.concat(output_md, "\n"))
+      assert.are.equal(expected_md, table.concat(output_md, "\n\n"))
     end)
   end
 end)
