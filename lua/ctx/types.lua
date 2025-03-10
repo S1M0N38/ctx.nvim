@@ -63,4 +63,7 @@
 -- parse.lua ------------------------------------------------------------------
 
 ---@class Ctx.Parse
+---@field file fun(Ctx.Items.Item): string Convert a file item to markdown
 ---@field selection fun(Ctx.Items.Item): string Convert a selection item to markdown
+---@field diagnostic fun(Ctx.Items.Item): string Convert a diagnostic item to markdown
+---@field item fun(Ctx.Items.Item): string Convert an item to markdown
