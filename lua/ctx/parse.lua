@@ -1,7 +1,13 @@
 -- lua/ctx/parse.lua
-local log = require("ctx.log")
 
 local M = {}
+
+local diagnostics = {
+  N = "note",
+  I = "info",
+  W = "warning",
+  E = "error",
+}
 
 --- Convert a file item to markdown
 ---@param item Ctx.Items.Item The file item to convert
@@ -35,8 +41,41 @@ end
 ---@param item Ctx.Items.Item The diagnostic item to convert
 ---@return string
 M.diagnostic = function(item)
-  log.debug("Converting diagnostic item to markdown")
-  return ""
+  local filetype = vim.api.nvim_get_option_value("ft", { buf = item.bufnr })
+  local commentstring = vim.api.nvim_get_option_value("commentstring", { buf = item.bufnr })
+  local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(item.bufnr), ":.")
+
+  -- region around the diagnostic
+  local offset = 2
+  local top_lines_index = math.max(item.lnum - offset, 0)
+  local bot_lines_index = math.min(item.lnum + offset, vim.api.nvim_buf_line_count(item.bufnr))
+  local top_lines = vim.api.nvim_buf_get_lines(item.bufnr, top_lines_index - 1, item.lnum - 1, false)
+  local bot_lines = vim.api.nvim_buf_get_lines(item.bufnr, item.lnum, bot_lines_index, false)
+
+  -- add diagnostic message
+  local line = vim.api.nvim_buf_get_lines(item.bufnr, item.lnum - 1, item.lnum, false)[1]
+  local comment = diagnostics[item.type] .. ": " .. item.text
+  line = line .. " " .. string.format(commentstring, comment)
+
+  -- generate snippet
+  local lines = {}
+  local header
+  if top_lines_index == bot_lines_index then
+    header = "```" .. filetype .. " " .. filename .. ":" .. item.lnum
+  else
+    header = "```" .. filetype .. " " .. filename .. ":" .. top_lines_index .. "-" .. bot_lines_index
+  end
+  table.insert(lines, header)
+  for _, l in ipairs(top_lines) do
+    table.insert(lines, l)
+  end
+  table.insert(lines, line)
+  for _, l in ipairs(bot_lines) do
+    table.insert(lines, l)
+  end
+  table.insert(lines, "```")
+
+  return table.concat(lines, "\n")
 end
 
 --- Convert an item to markdown
