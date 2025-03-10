@@ -7,8 +7,5 @@
     "${3rd}/busted/library"
   ],
   "Lua.diagnostics.libraryFiles": "Disable",
-  "Lua.diagnostics.neededFileStatus": "Any",
-  "Lua.workspace.ignoreDir": [
-    "spec/data/src/diagnostics.lua"
-  ]
+  "Lua.diagnostics.neededFileStatus": "Any"
 }
