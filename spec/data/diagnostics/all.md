@@ -22,7 +22,7 @@ function factorial(n)
     return 1
 ```
 
-```lua spec/data/src/diagnostics.lua:22-25
+```lua spec/data/src/diagnostics.lua:22-26
     return 1
   else
     return m * factorial(n - 1,) -- warning: Undefined global `m`.
@@ -30,7 +30,7 @@ function factorial(n)
 end
 ```
 
-```lua spec/data/src/diagnostics.lua:22-25
+```lua spec/data/src/diagnostics.lua:22-26
     return 1
   else
     return m * factorial(n - 1,) -- error: <exp> expected.
