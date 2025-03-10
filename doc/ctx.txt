@@ -29,7 +29,6 @@ It's recommended to use a plugin manager like lazy.nvim to install ctx.nvim:
 ================================================================================
 CONFIGURATION                                                     *ctx-config*
 
-                                                                 *ctx.setup()*
 ctx.setup({opts}) ~
 
 The `ctx.setup()` function sets up the plugin with user-provided options.
