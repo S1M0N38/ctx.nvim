@@ -19,7 +19,9 @@ end
 
 describe("[#parse #files] parse.file function tests", function()
   local data_path = "spec/data/files"
+  ---@diagnostic disable-next-line
   local lua_files = vim.fn.globpath(data_path, "*.lua", false, true)
+  ---@diagnostic disable-next-line
   local md_files = vim.fn.globpath(data_path, "*.md", false, true)
 
   for i = 1, #lua_files do
@@ -39,7 +41,9 @@ end)
 
 describe("[#parse #selections] parse.selection function tests", function()
   local data_path = "spec/data/selections"
+  ---@diagnostic disable-next-line
   local lua_files = vim.fn.globpath(data_path, "*.lua", false, true)
+  ---@diagnostic disable-next-line
   local md_files = vim.fn.globpath(data_path, "*.md", false, true)
 
   for i = 1, #lua_files do
@@ -59,7 +63,9 @@ end)
 
 describe("[#parse #diagnostics] parse.diagnostic function tests", function()
   local data_path = "spec/data/diagnostics"
+  ---@diagnostic disable-next-line
   local lua_files = vim.fn.globpath(data_path, "*.lua", false, true)
+  ---@diagnostic disable-next-line
   local md_files = vim.fn.globpath(data_path, "*.md", false, true)
 
   for i = 1, #lua_files do
