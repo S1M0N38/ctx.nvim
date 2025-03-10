@@ -5,13 +5,22 @@ local function read_file(filepath)
   return table.concat(lines, "\n")
 end
 
+-- Helper function to get appropriate commentstring
+local function commentstring(ft)
+  return ({
+    lua = "-- %s",
+    -- add other commentstring mappings here ...
+  })[ft]
+end
+
 local function load_buffer(item)
   local bufnr = vim.api.nvim_create_buf(false, true)
   -- set lines
   vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, vim.fn.readfile(item.filename))
-  -- set filetype
+  -- set options
   local filetype = vim.filetype.match({ filename = item.filename })
   vim.api.nvim_set_option_value("filetype", filetype, { buf = bufnr })
+  vim.api.nvim_set_option_value("commentstring", commentstring(filetype), { buf = bufnr })
   -- set filename
   vim.api.nvim_buf_set_name(bufnr, item.filename)
   -- update item to standard representation
@@ -80,11 +89,11 @@ describe("[#parse #diagnostics] parse.diagnostic function tests", function()
       local output_md = {}
       for _, item in ipairs(items) do
         load_buffer(item)
-        table.insert(output_md, parse.file(item))
+        table.insert(output_md, parse.diagnostic(item))
         unload_buffer(item)
       end
       local expected_md = read_file(md_files[i])
-      assert.are.equal(expected_md, table.concat(output_md, "\n"))
+      assert.are.equal(expected_md, table.concat(output_md, "\n\n"))
     end)
   end
 end)
