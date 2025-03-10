@@ -1,4 +1,4 @@
-```lua ctx.nvim/spec/data/src/diagnostics.lua:18-22
+```lua spec/data/src/diagnostics.lua:18-22
   end
 
   n = validate(m) -- warning: Undefined global `m`.

@@ -1,4 +1,4 @@
-```lua ctx.nvim/spec/data/src/diagnostics.lua:9-13
+```lua spec/data/src/diagnostics.lua:9-13
 --]]
 
 function factorial(n) -- info: Global variable in lowercase initial, Did you miss `local` or misspell it?
@@ -6,7 +6,7 @@ function factorial(n) -- info: Global variable in lowercase initial, Did you mis
   local function validate(x, y)
 ```
 
-```lua ctx.nvim/spec/data/src/diagnostics.lua:11-15
+```lua spec/data/src/diagnostics.lua:11-15
 function factorial(n)
   -- Nested function to validate input
   local function validate(x, y) -- note: Unused local `y`.
@@ -14,7 +14,7 @@ function factorial(n)
       error("factorial requires a non-negative integer")
 ```
 
-```lua ctx.nvim/spec/data/src/diagnostics.lua:18-22
+```lua spec/data/src/diagnostics.lua:18-22
   end
 
   n = validate(m) -- warning: Undefined global `m`.
@@ -22,7 +22,7 @@ function factorial(n)
     return 1
 ```
 
-```lua ctx.nvim/spec/data/src/diagnostics.lua:22-25
+```lua spec/data/src/diagnostics.lua:22-25
     return 1
   else
     return m * factorial(n - 1,) -- warning: Undefined global `m`.
@@ -30,7 +30,7 @@ function factorial(n)
 end
 ```
 
-```lua ctx.nvim/spec/data/src/diagnostics.lua:22-25
+```lua spec/data/src/diagnostics.lua:22-25
     return 1
   else
     return m * factorial(n - 1,) -- error: <exp> expected.

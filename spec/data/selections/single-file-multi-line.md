@@ -1,4 +1,4 @@
-```lua ctx.nvim/spec/data/src/diagnostics.lua:20-25
+```lua spec/data/src/diagnostics.lua:20-25
   n = validate(m)
   if n <= 1 then
     return 1

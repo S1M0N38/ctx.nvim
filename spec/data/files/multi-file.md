@@ -1,4 +1,4 @@
-```lua ctx.nvim/spec/data/src/lib/core/engine.lua
+```lua spec/data/src/lib/core/engine.lua
 -----------------------------------------
 -- lib/core/engine.lua
 -----------------------------------------
@@ -36,7 +36,7 @@ end
 return engine
 ```
 
-```lua ctx.nvim/spec/data/src/lib/core/events.lua
+```lua spec/data/src/lib/core/events.lua
 -----------------------------------------
 -- lib/core/events.lua
 -----------------------------------------

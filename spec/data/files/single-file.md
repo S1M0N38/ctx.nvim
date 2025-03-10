@@ -1,4 +1,4 @@
-```lua ctx.nvim/spec/data/src/main.lua
+```lua spec/data/src/main.lua
 -----------------------------------------
 -- main.lua
 -----------------------------------------

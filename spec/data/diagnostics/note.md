@@ -1,4 +1,4 @@
-```lua ctx.nvim/spec/data/src/diagnostics.lua:11-15
+```lua spec/data/src/diagnostics.lua:11-15
 function factorial(n)
   -- Nested function to validate input
   local function validate(x, y) -- note: Unused local `y`.

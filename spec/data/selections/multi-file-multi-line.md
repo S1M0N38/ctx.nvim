@@ -1,4 +1,4 @@
-```lua ctx.nvim/spec/data/src/modules/users.lua:23-28
+```lua spec/data/src/modules/users.lua:23-28
 function users.loadAll()
   -- Mock data
   users.create("John", "john@example.com")
@@ -7,7 +7,7 @@ function users.loadAll()
 end
 ```
 
-```lua ctx.nvim/spec/data/src/main.lua:9-21
+```lua spec/data/src/main.lua:9-21
 local function main()
   logger.log("Application starting")
 
@@ -23,7 +23,7 @@ local function main()
 end
 ```
 
-```lua ctx.nvim/spec/data/src/lib/core/engine.lua:7-17
+```lua spec/data/src/lib/core/engine.lua:7-17
 function engine.initialize(settings)
   if initialized then
     return false
