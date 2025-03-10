@@ -2,6 +2,7 @@
 return {
   {
     bufnr = 1, -- spec/data/src/lib/core/engine.lua
+    filename = "spec/data/src/lib/core/engine.lua",
     col = 1,
     end_col = 0,
     end_lnum = 0,
@@ -16,6 +17,7 @@ return {
   },
   {
     bufnr = 2, -- spec/data/src/lib/core/events.lua
+    filename = "spec/data/src/lib/core/events.lua",
     col = 1,
     end_col = 0,
     end_lnum = 0,

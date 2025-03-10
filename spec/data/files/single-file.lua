@@ -2,6 +2,7 @@
 return {
   {
     bufnr = 1, -- spec/data/src/main.lua
+    filename = "spec/data/src/main.lua",
     col = 1,
     end_col = 0,
     end_lnum = 0,
