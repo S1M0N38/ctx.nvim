@@ -4,12 +4,12 @@ local log = require("ctx.log")
 local M = {}
 
 --- Convert the current visual selection into a quickfix/loclist item
----@return Ctx.Items.Selection?
+---@return Ctx.Items.Item?
 M.selection = function()
   -- Check if we are in visual mode
   local mode = vim.fn.mode()
   if not (mode == "v" or mode == "V") then
-    log.warn("add_selection must be called in visual mode")
+    log.error("add_selection must be called in visual mode")
     return
   end
 
@@ -21,26 +21,16 @@ M.selection = function()
   local end_line = vim.fn.getpos("'>")[2]
   log.debug("selected lines: [" .. start_line .. ", " .. end_line .. "]")
 
-  local lines = vim.api.nvim_buf_get_lines(0, start_line - 1, end_line, false)
+  local bufnr = vim.api.nvim_get_current_buf()
+  local bufname = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(bufnr), ":~:.")
+  -- NOTE: this bufname is simply relative to cwd and does not implement project root discovery
 
-  local breadcrumbs = vim.fn["nvim_treesitter#statusline"]({
-    indicator_size = 120,
-    type_patterns = { "class", "function", "method", "impl", "struct" },
-    separator = " > ",
-    allow_duplicates = false,
-  })
-  log.debug("breadcrumbs:", breadcrumbs)
-
-  ---@type Ctx.Items.Selection
+  ---@type Ctx.Items.Item
   local item = {
-    bufnr = vim.api.nvim_get_current_buf(),
+    bufnr = bufnr,
     lnum = start_line,
     end_lnum = end_line,
-    text = string.sub(table.concat(lines, "\n"), 1, 76) .. " ...",
-    user_data = {
-      breadcrumbs = breadcrumbs,
-      lines = lines,
-    },
+    text = bufname .. ":" .. start_line .. "-" .. end_line,
     pattern = "",
     valid = 1,
   }
