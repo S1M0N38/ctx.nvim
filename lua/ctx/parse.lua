@@ -47,7 +47,7 @@ M.diagnostic = function(item)
 
   -- region around the diagnostic
   local offset = 2
-  local top_lines_index = math.max(item.lnum - offset, 0)
+  local top_lines_index = math.max(item.lnum - offset, 1)
   local bot_lines_index = math.min(item.lnum + offset, vim.api.nvim_buf_line_count(item.bufnr))
   local top_lines = vim.api.nvim_buf_get_lines(item.bufnr, top_lines_index - 1, item.lnum - 1, false)
   local bot_lines = vim.api.nvim_buf_get_lines(item.bufnr, item.lnum, bot_lines_index, false)
