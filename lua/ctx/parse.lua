@@ -19,8 +19,16 @@ end
 ---@param item Ctx.Items.Item The selection item to convert
 ---@return string
 M.selection = function(item)
-  log.debug("Converting selection item to markdown")
-  return ""
+  local filetype = vim.api.nvim_get_option_value("ft", { buf = item.bufnr })
+  local lines = vim.api.nvim_buf_get_lines(item.bufnr, item.lnum - 1, item.end_lnum, false)
+  local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(item.bufnr), ":.")
+  if item.lnum == item.end_lnum then
+    return "```" .. filetype .. " " .. filename .. ":" .. item.lnum .. "\n" .. lines[1] .. "\n```"
+  else
+    table.insert(lines, 1, "```" .. filetype .. " " .. filename .. ":" .. item.lnum .. "-" .. item.end_lnum)
+    table.insert(lines, "```")
+    return table.concat(lines, "\n")
+  end
 end
 
 --- Convert a diagnostic item to markdown
