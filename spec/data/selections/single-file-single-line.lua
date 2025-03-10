@@ -1,14 +1,17 @@
 return {
   {
-    bufnr = 1, -- spec/data/src/diagnostics.lua
+    bufnr = 1,
+    filename = "spec/data/src/diagnostics.lua",
+    col = 0,
+    end_col = 0,
     end_lnum = 15,
     lnum = 15,
+    module = "",
+    nr = 0,
     pattern = "",
-    text = '      error("factorial requires a non-negative integer") ...',
-    user_data = {
-      breadcrumbs = "function factorial(n) > local function validate(x, y)",
-      lines = { '      error("factorial requires a non-negative integer")' },
-    },
+    text = "spec/data/src/diagnostics.lua:15-15",
+    type = "",
     valid = 1,
+    vcol = 0,
   },
 }

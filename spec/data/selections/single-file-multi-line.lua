@@ -1,21 +1,17 @@
 return {
   {
-    bufnr = 1, -- spec/data/src/diagnostics.lua
+    bufnr = 1,
+    filename = "spec/data/src/diagnostics.lua",
+    col = 0,
+    end_col = 0,
     end_lnum = 25,
     lnum = 20,
+    module = "",
+    nr = 0,
     pattern = "",
-    text = "  n = validate(m)\n  if n <= 1 then\n    return 1\n  else\n    return n * factor ...",
-    user_data = {
-      breadcrumbs = "function factorial(n)",
-      lines = {
-        "  n = validate(m)",
-        "  if n <= 1 then",
-        "    return 1",
-        "  else",
-        "    return n * factorial(n - 1,)",
-        "  end",
-      },
-    },
+    text = "spec/data/src/diagnostics.lua:20-25",
+    type = "",
     valid = 1,
+    vcol = 0,
   },
 }

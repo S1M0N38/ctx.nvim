@@ -1,6 +1,7 @@
 return {
   {
-    bufnr = 1, -- spec/data/src/main.lua
+    bufnr = 1,
+    filename = "spec/data/src/main.lua",
     col = 0,
     end_col = 0,
     end_lnum = 13,
@@ -8,17 +9,14 @@ return {
     module = "",
     nr = 0,
     pattern = "",
-    text = '    logger.log("Debug mode enabled") ...',
+    text = "spec/data/src/main.lua:13-13",
     type = "",
-    user_data = {
-      breadcrumbs = "local function main()",
-      lines = { '    logger.log("Debug mode enabled")' },
-    },
     valid = 1,
     vcol = 0,
   },
   {
-    bufnr = 2, -- spec/data/src/modules/admin/logs/logger.lua
+    bufnr = 2,
+    filename = "spec/data/src/modules/admin/logs/logger.lua",
     col = 0,
     end_col = 0,
     end_lnum = 23,
@@ -26,12 +24,8 @@ return {
     module = "",
     nr = 0,
     pattern = "",
-    text = '  return logger.log(message, "DEBUG") ...',
+    text = "spec/data/src/modules/admin/logs/logger.lua:23-23",
     type = "",
-    user_data = {
-      breadcrumbs = "function logger.debug(message)",
-      lines = { '  return logger.log(message, "DEBUG")' },
-    },
     valid = 1,
     vcol = 0,
   },
