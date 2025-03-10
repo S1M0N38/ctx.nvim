@@ -4,7 +4,7 @@ local log = require("ctx.log")
 local M = {}
 
 --- Highlight quickfix/loclist item
----@param item Ctx.Items.Selection Item to highlight
+---@param item Ctx.Items.Item Item to highlight
 ---@param timeout integer? duration in milliseconds
 ---@return nil
 M.highlight = function(item, timeout)
