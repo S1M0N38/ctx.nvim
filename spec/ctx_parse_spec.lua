@@ -62,7 +62,7 @@ describe("[#parse #selections] parse.selection function tests", function()
         unload_buffer(item)
       end
       local expected_md = read_file(md_files[i])
-      assert.are.equal(expected_md, table.concat(output_md, "\n"))
+      assert.are.equal(expected_md, table.concat(output_md, "\n\n"))
     end)
   end
 end)
