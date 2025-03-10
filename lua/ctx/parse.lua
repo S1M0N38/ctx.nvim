@@ -7,8 +7,12 @@ local M = {}
 ---@param item Ctx.Items.Item The file item to convert
 ---@return string
 M.file = function(item)
-  log.debug("Converting file item to markdown")
-  return ""
+  local filetype = vim.api.nvim_get_option_value("ft", { buf = item.bufnr })
+  local lines = vim.api.nvim_buf_get_lines(item.bufnr, 0, -1, false)
+  local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(item.bufnr), ":.")
+  table.insert(lines, 1, "```" .. filetype .. " " .. filename)
+  table.insert(lines, "```")
+  return table.concat(lines, "\n")
 end
 
 --- Convert a selection item to markdown
