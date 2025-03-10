@@ -46,7 +46,8 @@ You can install ctx.nvim using your preferred plugin manager. Here's an example 
 
 To get started with ctx.nvim, read the documentation with [`:help ctx`](https://github.com/S1M0N38/ctx.nvim/blob/main/doc/ctx.txt). This will provide you with a comprehensive overview of the plugin's features and usage.
 
-> [!NOTE] > **Learning Vim/Neovim Documentation**: Vim/Neovim plugins are usually shipped with :help documentation. Learning how to navigate it is a valuable skill. If you are not familiar with it, start with `:help` and read the first 20 lines.
+> [!NOTE]
+> **Learning Vim/Neovim Documentation**: Vim/Neovim plugins are usually shipped with :help documentation. Learning how to navigate it is a valuable skill. If you are not familiar with it, start with `:help` and read the first 20 lines.
 
 ## 🙏 Acknowledgments
 
