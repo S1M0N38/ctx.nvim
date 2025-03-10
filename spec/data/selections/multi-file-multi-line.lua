@@ -1,7 +1,6 @@
 return {
   {
-    bufnr = 1,
-    file = "spec/data/src/modules/users.lua",
+    filename = "spec/data/src/modules/users.lua",
     col = 0,
     end_col = 0,
     end_lnum = 28,
@@ -15,7 +14,6 @@ return {
     vcol = 0,
   },
   {
-    bufnr = 2,
     filename = "spec/data/src/main.lua",
     col = 0,
     end_col = 0,
@@ -30,7 +28,6 @@ return {
     vcol = 0,
   },
   {
-    bufnr = 3,
     filename = "spec/data/src/lib/core/engine.lua",
     col = 0,
     end_col = 0,

@@ -1,6 +1,5 @@
 return {
   {
-    bufnr = 1, -- spec/data/src/diagnostics.lua
     filename = "spec/data/src/diagnostics.lua",
     col = 10,
     end_col = 19,
@@ -15,7 +14,6 @@ return {
     vcol = 0,
   },
   {
-    bufnr = 1, -- spec/data/src/diagnostics.lua
     filename = "spec/data/src/diagnostics.lua",
     col = 30,
     end_col = 31,
@@ -30,7 +28,6 @@ return {
     vcol = 0,
   },
   {
-    bufnr = 1, -- spec/data/src/diagnostics.lua
     filename = "spec/data/src/diagnostics.lua",
     col = 16,
     end_col = 17,
@@ -45,7 +42,6 @@ return {
     vcol = 0,
   },
   {
-    bufnr = 1, -- spec/data/src/diagnostics.lua
     filename = "spec/data/src/diagnostics.lua",
     col = 12,
     end_col = 13,
@@ -60,7 +56,6 @@ return {
     vcol = 0,
   },
   {
-    bufnr = 1, -- spec/data/src/diagnostics.lua
     filename = "spec/data/src/diagnostics.lua",
     col = 32,
     end_col = 32,

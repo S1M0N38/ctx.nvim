@@ -1,7 +1,6 @@
 -- generated with snacks.nvim v2.22.0 file picker
 return {
   {
-    bufnr = 1, -- spec/data/src/lib/core/engine.lua
     filename = "spec/data/src/lib/core/engine.lua",
     col = 1,
     end_col = 0,
@@ -16,7 +15,6 @@ return {
     vcol = 0,
   },
   {
-    bufnr = 2, -- spec/data/src/lib/core/events.lua
     filename = "spec/data/src/lib/core/events.lua",
     col = 1,
     end_col = 0,

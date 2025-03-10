@@ -1,6 +1,5 @@
 return {
   {
-    bufnr = 1,
     filename = "spec/data/src/diagnostics.lua",
     col = 0,
     end_col = 0,

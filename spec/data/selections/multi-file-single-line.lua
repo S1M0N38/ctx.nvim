@@ -1,6 +1,5 @@
 return {
   {
-    bufnr = 1,
     filename = "spec/data/src/main.lua",
     col = 0,
     end_col = 0,
@@ -15,7 +14,6 @@ return {
     vcol = 0,
   },
   {
-    bufnr = 2,
     filename = "spec/data/src/modules/admin/logs/logger.lua",
     col = 0,
     end_col = 0,
