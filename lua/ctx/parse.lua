@@ -82,8 +82,13 @@ end
 ---@param item Ctx.Items.Item The item to convert
 ---@return string
 M.item = function(item)
-  --- TODO: make use of the item specific functions
-  return ""
+  if item.type ~= nil and item.type ~= "" then -- diagnostic
+    return M.diagnostic(item)
+  elseif item.end_lnum ~= nil and item.end_lnum ~= 0 then -- selection
+    return M.selection(item)
+  else -- file
+    return M.file(item)
+  end
 end
 
 ---@type Ctx.Parse
