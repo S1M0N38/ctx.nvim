@@ -15,7 +15,7 @@
      </a>
   </p>
   <div><img src="https://github.com/user-attachments/assets/8133dec4-d81f-40af-bdbc-2c23b08c60bd" alt="Screencast: ctx.nvim example usage"></div>
-  <p><em>Quickfix List Items → Markdown</em></p>
+  <p><em>Quickfix / Location List Items → Markdown</em></p>
   <hr>
 </div>
 
@@ -23,7 +23,11 @@
 
 ## 💡 Idea
 
-<!--TODO: add idea section-->
+In Neovim, the Quickfix List and Location List serve as powerful mechanisms for storing references to code locations (`:h quickfix`). These lists can be populated through traditional commands (`:make`, `:vim`, `:grep`), modern LSP functionality, or via plugin pickers like [Telescope](https://github.com/nvim-telescope/telescope.nvim), [fzf-lua](https://github.com/ibhagwan/fzf-lua), [snacks.picker](https://github.com/folke/snacks.nvim) and others.
+
+These code references—enhanced with additional diagnostic information when coming from LSP diagnostics—represent valuable context that can significantly improve interactions with Large Language Models.
+
+ctx.nvim bridges this gap by converting Quickfix and Location List items into well-formatted Markdown, creating digestible context for LLMs. The plugin focuses solely on this conversion functionality, allowing it to complement any LLM integration workflow without introducing unnecessary dependencies.
 
 ## ⚡️ Requirements
 
