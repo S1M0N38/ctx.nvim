@@ -39,6 +39,71 @@ You can install ctx.nvim using your preferred plugin manager. Here's an example 
   "S1M0N38/ctx.nvim",
   version = "*",
   opts = {},
+  keys = {
+
+    -- Send visual selection to Quickfix List
+    {
+      "<leader>q",
+      function()
+        local item = require("ctx.items").selection()
+        require("ctx.utils").highlight(item)
+        vim.fn.setqflist({ item }, "a")
+      end,
+      desc = "Add to Quickfix List",
+      mode = { "v" },
+    },
+    -- Send visual selection to Location List
+    {
+      "<leader>l",
+      function()
+        local win = vim.api.nvim_get_current_win()
+        local item = require("ctx.items").selection()
+        require("ctx.utils").highlight(item)
+        vim.fn.setloclist(win, { item }, "a")
+      end,
+      desc = "Add to Location List",
+      mode = { "v" },
+    },
+    -- There are other ways to send items to Quickfix / Location list.
+    -- For example, many pickers (telescope, fzf-lua, snacks.picker) can
+    -- send items to Quickfix / Location list.
+
+    -- Yank Quickfix List to clipboard register
+    {
+      "yq",
+      function()
+        local md = require("ctx").qflist_to_md()
+        vim.fn.setreg("+", md)
+        vim.notify("Yanked qflist")
+      end,
+      desc = "Yank Quickfix List",
+      mode = { "n" },
+    },
+    -- Yank Location List to clipboard register
+    {
+      "yl",
+      function()
+        local nr = vim.api.nvim_get_current_win()
+        local md = require("ctx").loclist_to_md(nr)
+        vim.fn.setreg("+", md)
+        vim.notify("Yanked loclist")
+      end,
+      desc = "Yank Quickfix List",
+      mode = { "n" },
+    },
+
+    -- Suggestions for Quickfix List navigation
+    { "[q", vim.cmd.cprev, { desc = "Previous Quickfix" }, mode = { "n" } },
+    { "]q", vim.cmd.cnext, { desc = "Next Quickfix" }, mode = { "n" } },
+    { "[Q", vim.cmd.colder, desc = "Older Quickfix list", mode = { "n" } },
+    { "]Q", vim.cmd.cnewer, desc = "Newer Quickfix list", mode = { "n" } },
+    -- Suggestions for Location List navigation
+    { "[l", vim.cmd.lprev, desc = "Previous Location", mode = { "n" } },
+    { "]l", vim.cmd.lnext, desc = "Next Location", mode = { "n" } },
+    { "[L", vim.cmd.lolder, desc = "Older Location list", mode = { "n" } },
+    { "]L", vim.cmd.lnewer, desc = "Newer Location list", mode = { "n" } },
+
+  }
 }
 ```
 
