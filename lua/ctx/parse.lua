@@ -1,4 +1,5 @@
 -- lua/ctx/parse.lua
+local log = require("ctx.log")
 
 local M = {}
 
@@ -83,10 +84,13 @@ end
 ---@return string
 M.item = function(item)
   if item.type ~= nil and item.type ~= "" then -- diagnostic
+    log.debug("parse.diagnostic:", item.text)
     return M.diagnostic(item)
   elseif item.end_lnum ~= nil and item.end_lnum ~= 0 then -- selection
+    log.debug("parse.selection:", item.text)
     return M.selection(item)
   else -- file
+    log.debug("parse.file:", item.text)
     return M.file(item)
   end
 end
