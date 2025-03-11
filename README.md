@@ -14,7 +14,7 @@
      <img alt="Reddit post" src="https://img.shields.io/badge/post-reddit?style=for-the-badge&label=Reddit&color=FF5700"/>
      </a>
   </p>
-  <div><img src="..." alt="Screencast: ctx.nvim example usage"></div>
+  <div><img src="https://github.com/user-attachments/assets/8133dec4-d81f-40af-bdbc-2c23b08c60bd" alt="Screencast: ctx.nvim example usage"></div>
   <p><em>Quickfix List Items → Markdown</em></p>
   <hr>
 </div>
