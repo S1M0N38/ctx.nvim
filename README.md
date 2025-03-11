@@ -19,8 +19,6 @@
   <hr>
 </div>
 
----
-
 ## 💡 Idea
 
 In Neovim, the Quickfix List and Location List serve as powerful mechanisms for storing references to code locations (`:h quickfix`). These lists can be populated through traditional commands (`:make`, `:vim`, `:grep`), modern LSP functionality, or via plugin pickers like [Telescope](https://github.com/nvim-telescope/telescope.nvim), [fzf-lua](https://github.com/ibhagwan/fzf-lua), [snacks.picker](https://github.com/folke/snacks.nvim) and others.
@@ -45,7 +43,7 @@ You can install ctx.nvim using your preferred plugin manager. Here's an example 
   opts = {},
   keys = {
 
-    -- Send visual selection to Quickfix List
+    -- Add visual selection to Quickfix List
     {
       "<leader>q",
       function()
@@ -56,7 +54,7 @@ You can install ctx.nvim using your preferred plugin manager. Here's an example 
       desc = "Add to Quickfix List",
       mode = { "v" },
     },
-    -- Send visual selection to Location List
+    -- Add visual selection to Location List
     {
       "<leader>l",
       function()
@@ -81,7 +79,6 @@ You can install ctx.nvim using your preferred plugin manager. Here's an example 
         vim.notify("Yanked qflist")
       end,
       desc = "Yank Quickfix List",
-      mode = { "n" },
     },
     -- Yank Location List to clipboard register
     {
@@ -93,19 +90,18 @@ You can install ctx.nvim using your preferred plugin manager. Here's an example 
         vim.notify("Yanked loclist")
       end,
       desc = "Yank Quickfix List",
-      mode = { "n" },
     },
 
     -- Suggestions for Quickfix List navigation
-    { "[q", vim.cmd.cprev, { desc = "Previous Quickfix" }, mode = { "n" } },
-    { "]q", vim.cmd.cnext, { desc = "Next Quickfix" }, mode = { "n" } },
-    { "[Q", vim.cmd.colder, desc = "Older Quickfix list", mode = { "n" } },
-    { "]Q", vim.cmd.cnewer, desc = "Newer Quickfix list", mode = { "n" } },
+    { "[q", vim.cmd.cprev, desc = "Previous Quickfix item" },
+    { "]q", vim.cmd.cnext, desc = "Next Quickfix item" },
+    { "[Q", vim.cmd.colder, desc = "Older Quickfix list" },
+    { "]Q", vim.cmd.cnewer, desc = "Newer Quickfix list" },
     -- Suggestions for Location List navigation
-    { "[l", vim.cmd.lprev, desc = "Previous Location", mode = { "n" } },
-    { "]l", vim.cmd.lnext, desc = "Next Location", mode = { "n" } },
-    { "[L", vim.cmd.lolder, desc = "Older Location list", mode = { "n" } },
-    { "]L", vim.cmd.lnewer, desc = "Newer Location list", mode = { "n" } },
+    { "[l", vim.cmd.lprev, desc = "Previous Location item" },
+    { "]l", vim.cmd.lnext, desc = "Next Location item" },
+    { "[L", vim.cmd.lolder, desc = "Older Location list" },
+    { "]L", vim.cmd.lnewer, desc = "Newer Location list" },
 
   }
 }
