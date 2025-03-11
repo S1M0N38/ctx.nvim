@@ -31,23 +31,18 @@ local function read_file(filepath)
   local lines = vim.fn.readfile(filepath)
   return table.concat(lines, "\n")
 end
-
--- Helper function to get appropriate commentstring
-local function commentstring(ft)
-  return ({
-    lua = "-- %s",
-    -- add other commentstring mappings here ...
-  })[ft]
-end
-
 local function load_buffer(item)
+  vim.cmd([[filetype plugin on]]) -- ensure filetype detection is on
   local bufnr = vim.api.nvim_create_buf(false, true)
   -- set lines
   vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, vim.fn.readfile(item.filename))
   -- set options
   local filetype = vim.filetype.match({ filename = item.filename })
-  vim.api.nvim_set_option_value("filetype", filetype, { buf = bufnr })
-  vim.api.nvim_set_option_value("commentstring", commentstring(filetype), { buf = bufnr })
+  if type(filetype) == "string" then
+    vim.api.nvim_set_option_value("filetype", filetype, { buf = bufnr })
+    local commentstring = vim.filetype.get_option(filetype, "commentstring")
+    vim.api.nvim_set_option_value("commentstring", commentstring, { buf = bufnr })
+  end
   -- set filename
   vim.api.nvim_buf_set_name(bufnr, item.filename)
   -- update item to standard representation
