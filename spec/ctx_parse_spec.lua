@@ -1,5 +1,32 @@
 local parse = require("ctx.parse")
 
+local paths = {
+  files = {
+    ---@diagnostic disable-next-line
+    lua = vim.fn.globpath("spec/data/files", "*.lua", false, true),
+    ---@diagnostic disable-next-line
+    md = vim.fn.globpath("spec/data/files", "*.md", false, true),
+  },
+  selections = {
+    ---@diagnostic disable-next-line
+    lua = vim.fn.globpath("spec/data/selections", "*.lua", false, true),
+    ---@diagnostic disable-next-line
+    md = vim.fn.globpath("spec/data/selections", "*.md", false, true),
+  },
+  diagnostics = {
+    ---@diagnostic disable-next-line
+    lua = vim.fn.globpath("spec/data/diagnostics", "*.lua", false, true),
+    ---@diagnostic disable-next-line
+    md = vim.fn.globpath("spec/data/diagnostics", "*.md", false, true),
+  },
+  all = {
+    ---@diagnostic disable-next-line
+    lua = vim.fn.globpath("spec/data", "{diagnostics,selections,files}/*.lua", false, true),
+    ---@diagnostic disable-next-line
+    md = vim.fn.globpath("spec/data", "{diagnostics,selections,files}/*.md", false, true),
+  },
+}
+
 local function read_file(filepath)
   local lines = vim.fn.readfile(filepath)
   return table.concat(lines, "\n")
@@ -33,66 +60,64 @@ local function unload_buffer(item)
 end
 
 describe("[#parse #files] parse.file function tests", function()
-  local data_path = "spec/data/files"
-  ---@diagnostic disable-next-line
-  local lua_files = vim.fn.globpath(data_path, "*.lua", false, true)
-  ---@diagnostic disable-next-line
-  local md_files = vim.fn.globpath(data_path, "*.md", false, true)
-
-  for i = 1, #lua_files do
-    it(string.format("parse file item correctly (#%d/%d)", i, #lua_files), function()
-      local items = dofile(lua_files[i])
+  for i = 1, #paths.files.lua do
+    it(string.format("parse file item correctly (#%d/%d)", i, #paths.files.lua), function()
+      local items = dofile(paths.files.lua[i])
       local output_md = {}
       for _, item in ipairs(items) do
         load_buffer(item)
         table.insert(output_md, parse.file(item))
         unload_buffer(item)
       end
-      local expected_md = read_file(md_files[i])
+      local expected_md = read_file(paths.files.md[i])
       assert.are.equal(expected_md, table.concat(output_md, "\n\n"))
     end)
   end
 end)
 
 describe("[#parse #selections] parse.selection function tests", function()
-  local data_path = "spec/data/selections"
-  ---@diagnostic disable-next-line
-  local lua_files = vim.fn.globpath(data_path, "*.lua", false, true)
-  ---@diagnostic disable-next-line
-  local md_files = vim.fn.globpath(data_path, "*.md", false, true)
-
-  for i = 1, #lua_files do
-    it(string.format("parse selection item correctly (#%d/%d)", i, #lua_files), function()
-      local items = dofile(lua_files[i])
+  for i = 1, #paths.selections.lua do
+    it(string.format("parse selection item correctly (#%d/%d)", i, #paths.selections.lua), function()
+      local items = dofile(paths.selections.lua[i])
       local output_md = {}
       for _, item in ipairs(items) do
         load_buffer(item)
         table.insert(output_md, parse.selection(item))
         unload_buffer(item)
       end
-      local expected_md = read_file(md_files[i])
+      local expected_md = read_file(paths.selections.md[i])
       assert.are.equal(expected_md, table.concat(output_md, "\n\n"))
     end)
   end
 end)
 
 describe("[#parse #diagnostics] parse.diagnostic function tests", function()
-  local data_path = "spec/data/diagnostics"
-  ---@diagnostic disable-next-line
-  local lua_files = vim.fn.globpath(data_path, "*.lua", false, true)
-  ---@diagnostic disable-next-line
-  local md_files = vim.fn.globpath(data_path, "*.md", false, true)
-
-  for i = 1, #lua_files do
-    it(string.format("parse diagnostic item correctly (#%d/%d)", i, #lua_files), function()
-      local items = dofile(lua_files[i])
+  for i = 1, #paths.diagnostics.lua do
+    it(string.format("parse diagnostic item correctly (#%d/%d)", i, #paths.diagnostics.lua), function()
+      local items = dofile(paths.diagnostics.lua[i])
       local output_md = {}
       for _, item in ipairs(items) do
         load_buffer(item)
         table.insert(output_md, parse.diagnostic(item))
         unload_buffer(item)
       end
-      local expected_md = read_file(md_files[i])
+      local expected_md = read_file(paths.diagnostics.md[i])
+      assert.are.equal(expected_md, table.concat(output_md, "\n\n"))
+    end)
+  end
+end)
+
+describe("[#parse #items] parse.items function tests", function()
+  for i = 1, #paths.all.lua do
+    it(string.format("parse diagnostic item correctly (#%d/%d)", i, #paths.all.lua), function()
+      local items = dofile(paths.all.lua[i])
+      local output_md = {}
+      for _, item in ipairs(items) do
+        load_buffer(item)
+        table.insert(output_md, parse.item(item))
+        unload_buffer(item)
+      end
+      local expected_md = read_file(paths.all.md[i])
       assert.are.equal(expected_md, table.concat(output_md, "\n\n"))
     end)
   end
