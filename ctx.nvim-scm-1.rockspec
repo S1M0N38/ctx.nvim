@@ -8,7 +8,7 @@ local user = "S1M0N38"
 package = "ctx.nvim"
 
 description = {
-	summary = "Quickfix List Items → Markdown",
+	summary = "Quickfix / Location List Items → Markdown",
 	labels = { "neovim" },
 	homepage = "https://github.com/" .. user .. "/" .. package,
 	license = "MIT",
