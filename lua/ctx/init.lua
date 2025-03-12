@@ -5,7 +5,6 @@ local M = {}
 ---@param opts Ctx.Options Plugin options
 M.setup = function(opts)
   require("ctx.config").setup(opts)
-  require("ctx.log").setup(opts)
 end
 
 ---Convert the quickfix list to markdown
