@@ -1,21 +1,39 @@
 ================================================================================
 INTRODUCTION                                                             *ctx*
 
-ctx.nvim ... (add introduction)
+ctx.nvim is a Neovim plugin that converts quickfix and location list items
+into well-formatted markdown. This makes it easy to extract and share code
+context, particularly for use with LLMs (Large Language Models) or other
+documentation needs.
+
+The plugin distinguishes between three types of items:
+- File references: Complete file contents
+- Selections: Specific line ranges from files
+- Diagnostics: Error/warning messages with surrounding context
+
+Each item is converted into a markdown code block that includes the filetype,
+filename, and relevant code lines, creating a clean, portable representation
+of your code context.
 
 Table of contents:
 
-1. REQUIREMENTS: Plugin dependencies and setup.             |ctx-requirements|
-2. INSTALLATION: How to install the plugin.                 |ctx-installation|
-3. CONFIGURATION: Available options and their defaults.           |ctx-config|
-4. FUNCTIONS: Lua functions exposed by the plugin.             |ctx-functions|
+1. REQUIREMENTS: Plugin dependencies and setup              |ctx-requirements|
+2. INSTALLATION: How to install the plugin                  |ctx-installation|
+3. CONFIGURATION: Available options and their defaults            |ctx-config|
+4. USAGE: How to use the plugin                                    |ctx-usage|
+5. FUNCTIONS: Lua functions exposed by the plugin              |ctx-functions|
+6. EXAMPLES: Common usage patterns and examples                 |ctx-examples|
 
 ================================================================================
 REQUIREMENTS                                                *ctx-requirements*
 
 Before using ctx.nvim, ensure you have the following:
 
-- Neovim (>= 0.10)
+- Neovim >= 0.10
+
+No external dependencies are required, as the plugin uses Neovim's built-in
+functionality for working with quickfix/location lists and buffer
+manipulation.
 
 ================================================================================
 INSTALLATION                                                *ctx-installation*
@@ -23,20 +41,57 @@ INSTALLATION                                                *ctx-installation*
 It's recommended to use a plugin manager like lazy.nvim to install ctx.nvim:
 
 >lua
-  { "S1M0N38/ctx.nvim", version = "*", opts = {} }
+  {
+    "S1M0N38/ctx.nvim",
+    version = "*",
+    opts = {},
+  }
 <
+
+You can add key mappings as needed for your workflow. See |ctx-examples| for
+common mapping configurations.
 
 ================================================================================
 CONFIGURATION                                                     *ctx-config*
 
-ctx.setup({opts}) ~
-
-The `ctx.setup()` function sets up the plugin with user-provided options.
-Here are the available options:
+ctx.nvim has minimal configuration options, primarily focused on logging:
 
 >lua
-  { }
+  require("ctx").setup({
+    log = {
+      level = "warn",     -- "trace", "debug", "info", "warn", "error"
+      use_console = true, -- Show logs in Neovim's notifications
+      use_file = false,   -- Write logs to a file
+    }
+  })
 <
+
+The default settings are sufficient for most users. You only need to adjust
+these if you encounter issues and want more detailed logging information.
+
+================================================================================
+USAGE                                                              *ctx-usage*
+
+ctx.nvim does not provide any commands or default key mappings. Instead, it
+exposes Lua functions that you can call directly or bind to keys.
+
+Typical workflow:
+
+1. Populate the quickfix list (or location list) using built-in commands like:
+   - `:grep` or `:vimgrep` for searches
+   - `:make` for compilation errors
+   - LSP commands for diagnostics
+   - Visual selection with `ctx.items.selection()` (see |ctx-functions|)
+
+2. Convert the quickfix list to markdown:
+   >lua
+     local markdown = require("ctx").qflist_to_md()
+   <
+
+3. Use the markdown as needed:
+   - Copy to clipboard
+   - Save to a file
+   - Send to an LLM or other tool
 
 ================================================================================
 FUNCTIONS                                                      *ctx-functions*
@@ -45,11 +100,169 @@ ctx.nvim exposes the following Lua functions:
 
                                                                  *ctx.setup()*
 ctx.setup({opts}) ~
-  Set up the plugin with the given options. See |ctx-config| for available
-  options.
+  Configure the plugin. See |ctx-config| for available options.
 
+                                                          *ctx.qflist_to_md()*
+ctx.qflist_to_md({id}) ~
+  Convert the quickfix list to markdown.
+  Parameters:
+    {id} (optional, default: 0): The unique quickfix list index.
+         Use 0 for the current list. See |quickfix-ID| for more information.
+  Returns:
+    A string containing the markdown representation of the quickfix list.
 
-Note: Lua annotations (LuaCATS) are defined in `lua/ctx/types.lua`.
+                                                         *ctx.loclist_to_md()*
+ctx.loclist_to_md({nr}) ~
+  Convert a location list to markdown.
+  Parameters:
+    {nr}: The window number of the location list. See |getloclist()| for more
+          information.
+  Returns:
+    A string containing the markdown representation of the location list.
+
+                                                       *ctx.items.selection()*
+ctx.items.selection() ~
+  Convert the current visual selection into a quickfix/location list item.
+  Note: Must be called in visual mode.
+  Returns:
+    A quickfix item table representing the visual selection.
+
+                                                       *ctx.utils.highlight()*
+ctx.utils.highlight({item}, {timeout}) ~
+  Highlight a quickfix/location list item in its buffer.
+  Parameters:
+    {item}: A quickfix/location list item.
+    {timeout} (optional, default: 100): Duration in milliseconds.
+
+                                                            *ctx.parse.item()*
+ctx.parse.item({item})~
+  Convert a quickfix/location list item to markdown, automatically determining
+  its type (file, selection, or diagnostic).
+  Parameters:
+    {item}: A quickfix/location list item.
+  Returns:
+    A string containing the markdown representation of the item.
+
+                                                            *ctx.parse.file()*
+ctx.parse.file({item}) ~
+  Convert a file item to markdown.
+  Parameters:
+    {item}: A quickfix/location list item representing a file.
+  Returns:
+    A string containing the markdown representation of the file.
+
+                                                       *ctx.parse.selection()*
+ctx.parse.selection({item}) ~
+  Convert a selection item to markdown.
+  Parameters:
+    {item}: A quickfix/location list item representing a selection.
+  Returns:
+    A string containing the markdown representation of the selection.
+
+                                                      *ctx.parse.diagnostic()*
+ctx.parse.diagnostic({item}) ~
+  Convert a diagnostic item to markdown.
+  Parameters:
+    {item}: A quickfix/location list item representing a diagnostic.
+  Returns:
+    A string containing the markdown representation of the diagnostic.
+
+================================================================================
+EXAMPLES                                                        *ctx-examples*
+
+Below are common usage patterns for ctx.nvim:
+
+For lazy.nvim users, the easiest way to configure keymaps is to use the `keys` 
+table in your plugin specification, as shown in the ctx.nvim README:
+
+>lua
+  {
+    "S1M0N38/ctx.nvim",
+    version = "*",
+    opts = {},
+    keys = {
+      -- Add visual selection to Quickfix List
+      {
+        "<leader>q",
+        function()
+          local item = require("ctx.items").selection()
+          require("ctx.utils").highlight(item)
+          vim.fn.setqflist({ item }, "a")
+        end,
+        desc = "Add to Quickfix List",
+        mode = { "v" },
+      },
+      -- Additional keymaps...
+    },
+  }
+<
+
+Adding visual selections to quickfix/location lists:
+>lua
+  -- Add visual selection to Quickfix List
+  vim.keymap.set("v", "<leader>q", function()
+    local item = require("ctx.items").selection()
+    require("ctx.utils").highlight(item)
+    vim.fn.setqflist({ item }, "a")
+  end, { desc = "Add to Quickfix List" })
+
+  -- Add visual selection to Location List
+  vim.keymap.set("v", "<leader>l", function()
+    local win = vim.api.nvim_get_current_win()
+    local item = require("ctx.items").selection()
+    require("ctx.utils").highlight(item)
+    vim.fn.setloclist(win, { item }, "a")
+  end, { desc = "Add to Location List" })
+<
+
+Copying quickfix/location lists to clipboard:
+>lua
+  -- Yank Quickfix List to clipboard
+  vim.keymap.set("n", "yq", function()
+    local md = require("ctx").qflist_to_md()
+    vim.fn.setreg("+", md)
+    vim.notify("Yanked qflist")
+  end, { desc = "Yank Quickfix List" })
+
+  -- Yank Location List to clipboard
+  vim.keymap.set("n", "yl", function()
+    local nr = vim.api.nvim_get_current_win()
+    local md = require("ctx").loclist_to_md(nr)
+    vim.fn.setreg("+", md)
+    vim.notify("Yanked loclist")
+  end, { desc = "Yank Location List" })
+<
+
+Navigation keymaps for quickfix/location lists:
+>lua
+  -- Quickfix List navigation
+  vim.keymap.set("n", "[q", vim.cmd.cprev, { desc = "Previous Quickfix item" })
+  vim.keymap.set("n", "]q", vim.cmd.cnext, { desc = "Next Quickfix item" })
+  vim.keymap.set("n", "[Q", vim.cmd.colder, { desc = "Older Quickfix list" })
+  vim.keymap.set("n", "]Q", vim.cmd.cnewer, { desc = "Newer Quickfix list" })
+ 
+  -- Location List navigation
+  vim.keymap.set("n", "[l", vim.cmd.lprev, { desc = "Previous Location item" })
+  vim.keymap.set("n", "]l", vim.cmd.lnext, { desc = "Next Location item" })
+  vim.keymap.set("n", "[L", vim.cmd.lolder, { desc = "Older Location list" })
+  vim.keymap.set("n", "]L", vim.cmd.lnewer, { desc = "Newer Location list" })
+<
+
+Integration with LLM workflows (example with a hypothetical LLM plugin):
+>lua
+  -- Send code context to LLM
+  vim.keymap.set("n", "<leader>ai", function()
+    -- Get context from quickfix list
+    local context = require("ctx").qflist_to_md()
+ 
+    -- Combine with user prompt
+    local prompt = "Here's my code:\n\n" .. context .. 
+                  "\n\nPlease explain what it does and suggest improvements."
+ 
+    -- Send to LLM (implementation depends on your LLM plugin)
+    require("your_llm_plugin").send_prompt(prompt)
+  end, { desc = "Send Context to LLM" })
+<
 
 ================================================================================
 vim:tw=78:ts=8:et:ft=help:norl:
