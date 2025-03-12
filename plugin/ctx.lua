@@ -1,6 +1,8 @@
 -- In this file you define the User commands, i.t how the user will interact with your plugin.
 
--- TODO: add ctx commands here
+-- NOTE: This plugin does not have any user commands.
+-- Define your own keymaps using plugin functions.
+-- Take a look at the README.md for more information.
 
 -- RESOURCES:
 --  - :help lua-guide-commands-create
